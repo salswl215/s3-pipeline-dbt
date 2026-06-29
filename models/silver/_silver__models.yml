@@ -1,0 +1,20 @@
+version: 2
+
+models:
+  - name: silver_metrics
+    description: "Deduplicated, typed metrics. One row per natural key (measurement+devices+parameter+ts_ns)."
+    columns:
+      - name: value
+        tests: [not_null]
+      - name: ts
+        tests: [not_null]
+      - name: ts_ns
+        tests: [not_null]
+    tests:
+      - dbt_utils.unique_combination_of_columns:
+          combination_of_columns:
+            - measurement
+            - cdevice
+            - pdevice
+            - parameter
+            - ts_ns
