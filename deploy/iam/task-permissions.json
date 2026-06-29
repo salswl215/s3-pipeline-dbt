@@ -1,0 +1,17 @@
+{
+  "Version": "2012-10-17",
+  "Statement": [
+    { "Sid": "Athena", "Effect": "Allow",
+      "Action": ["athena:StartQueryExecution","athena:GetQueryExecution","athena:GetQueryResults","athena:StopQueryExecution","athena:GetWorkGroup"],
+      "Resource": "*" },
+    { "Sid": "Glue", "Effect": "Allow",
+      "Action": ["glue:GetDatabase","glue:GetDatabases","glue:CreateDatabase","glue:GetTable","glue:GetTables","glue:CreateTable","glue:UpdateTable","glue:DeleteTable","glue:BatchCreatePartition","glue:GetPartition","glue:GetPartitions","glue:BatchGetPartition","glue:UpdatePartition","glue:CreatePartition"],
+      "Resource": "*" },
+    { "Sid": "S3DataRW", "Effect": "Allow",
+      "Action": ["s3:GetObject","s3:PutObject","s3:DeleteObject"],
+      "Resource": ["arn:aws:s3:::${DATA_BUCKET}/silver/*","arn:aws:s3:::${DATA_BUCKET}/gold/*","arn:aws:s3:::${DATA_BUCKET}/bronze/*","arn:aws:s3:::${DATA_BUCKET}/_athena/*"] },
+    { "Sid": "S3List", "Effect": "Allow",
+      "Action": ["s3:GetBucketLocation","s3:ListBucket"],
+      "Resource": "arn:aws:s3:::${DATA_BUCKET}" }
+  ]
+}
