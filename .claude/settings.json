@@ -1,0 +1,20 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(cat ./.bkit/state/pdca-status.json ./.bkit/state/memory.json 2>/dev/null; echo \"---PARENT---\"; ls -la /Users/seominji/work/ 2>/dev/null)",
+      "Read(//Users/seominji/work/**)",
+      "Bash(cat /Users/seominji/.claude/projects/-Users-seominji-work-s3-pipeline-dbt/memory/MEMORY.md 2>/dev/null; echo \"---EXISTING CLAUDE---\"; find /Users/seominji/work -maxdepth 2 -iname 'CLAUDE.md' 2>/dev/null)",
+      "Read(//Users/seominji/work/s3-pipeline/**)",
+      "Bash(cat CLAUDE.md)",
+      "Bash(cd /Users/seominji/work/s3-pipeline && echo \"===TREE===\" && find . -type f -not -path './.git/*' -not -path './.venv/*' -not -path '*/__pycache__/*' -not -path './.bkit/*' 2>/dev/null | head -80)",
+      "Bash(cd /Users/seominji/work/s3-pipeline && cat src/raw_to_bronze/iceberg_io.py src/raw_to_bronze/transform.py 2>/dev/null | head -120)",
+      "Bash(cd /Users/seominji/work/s3-pipeline && echo \"===pyproject===\" && cat pyproject.toml && echo \"===Dockerfile===\" && cat deploy/Dockerfile && echo \"===task-def===\" && cat deploy/task-definition.json)",
+      "Bash(cd /Users/seominji/work/s3-pipeline && cat deploy/README.md 2>/dev/null | head -60)",
+      "Bash(cd /Users/seominji/work/s3-pipeline && sed -n '1,80p' docs/superpowers/specs/2026-06-26-event-time-iceberg-bronze-design.md 2>/dev/null | grep -A40 -i 'DDL\\\\|CREATE TABLE\\\\|§3\\\\|partition')",
+      "Bash(git init *)",
+      "Bash(git add *)",
+      "Bash(git rm *)",
+      "Bash(git config *)"
+    ]
+  }
+}

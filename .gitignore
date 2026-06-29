@@ -1,0 +1,20 @@
+# bkit runtime state / tooling
+.bkit/
+
+# Python / uv
+.venv/
+__pycache__/
+*.py[cod]
+.python-version
+
+# dbt
+target/
+dbt_packages/
+logs/
+
+# secrets / account-specific deploy env (committed as *.example only)
+deploy/config.env
+deploy/task.env
+
+# OS
+.DS_Store
