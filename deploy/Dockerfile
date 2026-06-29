@@ -11,7 +11,7 @@ RUN useradd --create-home --uid 10001 appuser
 WORKDIR /app
 COPY --from=builder --chown=appuser:appuser /app/.venv /app/.venv
 # dbt project files
-COPY --chown=appuser:appuser dbt_project.yml packages.yml profiles.yml ./
+COPY --chown=appuser:appuser dbt_project.yml packages.yml package-lock.yml profiles.yml ./
 COPY --chown=appuser:appuser models ./models
 COPY --chown=appuser:appuser macros ./macros
 ENV PATH="/app/.venv/bin:$PATH" \
