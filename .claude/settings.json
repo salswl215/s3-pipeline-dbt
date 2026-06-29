@@ -54,7 +54,10 @@
       "Bash(AWS_REGION=us-east-1 ATHENA_STAGING_DIR=s3://dummy/staging/ ATHENA_DATA_DIR=s3://dummy/silver/ ATHENA_WORKGROUP=primary DBT_SCHEMA=silver uv run dbt list)",
       "Bash(export AWS_REGION=us-east-1 ATHENA_STAGING_DIR=s3://dummy/staging/ ATHENA_DATA_DIR=s3://dummy/silver/ ATHENA_WORKGROUP=primary DBT_SCHEMA=silver)",
       "Bash(git commit -q -m 'feat: add AA010 measurement-scoped silver/gold example + models guide *)",
-      "Bash(git commit -q -m 'chore: persist Claude Code permission allowlist from session *)"
+      "Bash(git commit -q -m 'chore: persist Claude Code permission allowlist from session *)",
+      "Bash(git mv *)",
+      "Bash(python3 -c \"import sys,json; [print\\(json.loads\\(l\\)['name'], '->', json.loads\\(l\\)['config']['schema']\\) for l in sys.stdin if l.strip\\(\\).startswith\\('{'\\)]\")",
+      "Bash(git commit -q -m 'refactor: move AA010 example models into silver/gold folders *)"
     ]
   }
 }

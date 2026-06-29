@@ -15,5 +15,3 @@ models:
       +schema: silver
     gold:
       +schema: gold
-    example_measurement:
-      +schema: example

@@ -11,12 +11,13 @@ runs only scan/merge recent partitions. Run everything with `uv run dbt build`.
 source: bronze.metrics            (read-only contract; declared in models/bronze/)
   └─ silver.silver_metrics        dedup + typed (1 row per natural key)
        ├─ gold.gold_metrics_daily        daily avg/min/max/count per device+parameter
-       │    └─ example.gold_metrics_daily_aa010   (measurement='AA010' slice)
-       └─ example.silver_metrics_aa010            (measurement='AA010' slice)
+       │    └─ gold.gold_metrics_daily_aa010   (measurement='AA010' slice)
+       └─ silver.silver_metrics_aa010          (measurement='AA010' slice)
 ```
 
 Output Glue databases come from each folder's `+schema` in `dbt_project.yml`:
-`silver/` → `silver`, `gold/` → `gold`, `example_measurement/` → `example`.
+`silver/` → `silver`, `gold/` → `gold`. The measurement-scoped example models live in
+the `silver/` and `gold/` folders alongside their parents, so they land in the same schemas.
 
 ## Why `dt` (not `day(ts)`)
 
@@ -46,15 +47,16 @@ columns. Natural key = `(measurement, cdevice, pdevice, parameter, ts_ns)`; with
 Tests: unique-combination on the grain, `sample_count >= 1`.
 
 ### Example: a single-measurement slice (`AA010`)
-`models/example_measurement/`. Shows how to carve one measurement into its own marts by
-filtering the shared layers (DRY — reuses upstream dedup/aggregate rather than re-deriving):
+Shows how to carve one measurement into its own marts by filtering the shared layers
+(DRY — reuses upstream dedup/aggregate rather than re-deriving). Each example model lives
+in its own layer folder, so it inherits that layer's schema:
 
-- `example.silver_metrics_aa010` ← `ref('silver_metrics')` `where measurement = 'AA010'`
-- `example.gold_metrics_daily_aa010` ← `ref('gold_metrics_daily')` `where measurement = 'AA010'`
+- `silver.silver_metrics_aa010` (`models/silver/`) ← `ref('silver_metrics')` `where measurement = 'AA010'`
+- `gold.gold_metrics_daily_aa010` (`models/gold/`) ← `ref('gold_metrics_daily')` `where measurement = 'AA010'`
 
 Both keep the same keys/grain and Iceberg incremental-merge pattern as their parents, so they
-build and test exactly like the core models. To slice a different measurement, copy this folder
-and change the `where measurement = '…'` literal (and the file/model names).
+build and test exactly like the core models. To slice a different measurement, copy a model
+and change the `where measurement = '…'` literal (and the file/model name).
 
 ## Live verification
 
