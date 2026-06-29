@@ -1,0 +1,9 @@
+.venv
+target
+dbt_packages
+logs
+.git
+.bkit
+docs
+deploy
+**/__pycache__
