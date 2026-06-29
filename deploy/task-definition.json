@@ -1,0 +1,27 @@
+{
+  "family": "${TASK_FAMILY}",
+  "requiresCompatibilities": ["FARGATE"],
+  "networkMode": "awsvpc",
+  "cpu": "1024",
+  "memory": "2048",
+  "executionRoleArn": "${EXEC_ROLE_ARN}",
+  "taskRoleArn": "${TASK_ROLE_ARN}",
+  "runtimePlatform": { "cpuArchitecture": "X86_64", "operatingSystemFamily": "LINUX" },
+  "containerDefinitions": [
+    {
+      "name": "s3-pipeline-dbt",
+      "image": "${ECR_IMAGE_URI}",
+      "essential": true,
+      "environmentFiles": [ { "type": "s3", "value": "${ENV_FILE_S3_ARN}" } ],
+      "logConfiguration": {
+        "logDriver": "awslogs",
+        "options": {
+          "awslogs-group": "${LOG_GROUP}",
+          "awslogs-region": "${AWS_REGION}",
+          "awslogs-stream-prefix": "s3-pipeline-dbt",
+          "awslogs-create-group": "true"
+        }
+      }
+    }
+  ]
+}
