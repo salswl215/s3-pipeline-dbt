@@ -1,0 +1,17 @@
+name: 's3_pipeline_dbt'
+version: '0.1.0'
+config-version: 2
+profile: 's3_pipeline_dbt'
+
+model-paths: ["models"]
+macro-paths: ["macros"]
+
+vars:
+  lookback_days: 3
+
+models:
+  s3_pipeline_dbt:
+    silver:
+      +schema: silver
+    gold:
+      +schema: gold

@@ -1,0 +1,9 @@
+[project]
+name = "s3-pipeline-dbt"
+version = "0.1.0"
+description = "Add your description here"
+requires-python = ">=3.12"
+dependencies = [
+    "dbt-athena>=1.10.2",
+    "dbt-core>=1.11.11",
+]
