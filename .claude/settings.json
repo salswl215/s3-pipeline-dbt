@@ -57,7 +57,19 @@
       "Bash(git commit -q -m 'chore: persist Claude Code permission allowlist from session *)",
       "Bash(git mv *)",
       "Bash(python3 -c \"import sys,json; [print\\(json.loads\\(l\\)['name'], '->', json.loads\\(l\\)['config']['schema']\\) for l in sys.stdin if l.strip\\(\\).startswith\\('{'\\)]\")",
-      "Bash(git commit -q -m 'refactor: move AA010 example models into silver/gold folders *)"
+      "Bash(git commit -q -m 'refactor: move AA010 example models into silver/gold folders *)",
+      "Bash(AWS_REGION=us-east-1 AWS_DEFAULT_REGION=us-east-1 DBT_S3_STAGING_DIR=s3://x/s/ DBT_S3_DATA_DIR=s3://x/d/ DBT_ATHENA_WORKGROUP=primary DBT_ATHENA_DATABASE=awsdatacatalog DBT_ATHENA_SCHEMA=silver uv run dbt parse)",
+      "Bash(AWS_REGION=us-east-1 ATHENA_STAGING_DIR=s3://x/s/ ATHENA_DATA_DIR=s3://x/d/ ATHENA_WORKGROUP=primary uv run dbt parse)",
+      "Bash(AWS_REGION=us-east-1 ATHENA_STAGING_DIR=s3://x/s/ ATHENA_DATA_DIR=s3://x/d/ ATHENA_WORKGROUP=primary uv run dbt compile --select silver_metrics --vars '{start_date: \"2026-06-25\"}')",
+      "Bash(git check-ignore *)",
+      "Read(//Users/seominji/.aws/**)",
+      "Bash(aws sts *)",
+      "Bash(aws iam put-role-policy --role-name dbt-athena-execution-role --policy-name envfile --policy-document '{ *)",
+      "Bash(aws iam *)",
+      "Bash(cd /Users/seominji/work/dbt/dbt-athena/deploy 2>/dev/null && echo \"=== 폴더 구조 ===\" && find . -type f -not -path '*/.git/*' | head -50 || echo \"경로 접근 불가\")",
+      "Read(//Users/seominji/work/dbt/dbt-athena/deploy/**)",
+      "Bash(python3 -m py_compile deploy/run_dbt.py)",
+      "Bash(sed -n '/dbt_command = os.getenv/,/log.info\\(\"run_dbt 시작/p' deploy/run_dbt.py)"
     ]
   }
 }
