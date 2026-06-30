@@ -5,7 +5,7 @@
       "Action": ["athena:StartQueryExecution","athena:GetQueryExecution","athena:GetQueryResults","athena:StopQueryExecution","athena:GetWorkGroup"],
       "Resource": "*" },
     { "Sid": "Glue", "Effect": "Allow",
-      "Action": ["glue:GetDatabase","glue:GetDatabases","glue:CreateDatabase","glue:GetTable","glue:GetTables","glue:CreateTable","glue:UpdateTable","glue:DeleteTable","glue:BatchCreatePartition","glue:GetPartition","glue:GetPartitions","glue:BatchGetPartition","glue:UpdatePartition","glue:CreatePartition"],
+      "Action": ["glue:GetDatabase","glue:GetDatabases","glue:CreateDatabase","glue:GetTable","glue:GetTables","glue:CreateTable","glue:UpdateTable","glue:DeleteTable","glue:GetTableVersion","glue:GetTableVersions","glue:DeleteTableVersion","glue:BatchDeleteTableVersion","glue:BatchCreatePartition","glue:GetPartition","glue:GetPartitions","glue:BatchGetPartition","glue:UpdatePartition","glue:CreatePartition","glue:DeletePartition"],
       "Resource": "*" },
     { "Sid": "S3DataRW", "Effect": "Allow",
       "Action": ["s3:GetObject","s3:PutObject","s3:DeleteObject"],
