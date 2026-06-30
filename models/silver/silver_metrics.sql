@@ -9,8 +9,13 @@
 with src as (
   select cdevice, pdevice, parameter, value, ts, ts_ns, measurement, dt
   from {{ source('bronze','metrics') }}
+  where 1 = 1
   {% if is_incremental() %}
-  where dt >= (select date_add('day', -{{ var('lookback_days', 3) }}, max(dt)) from {{ this }})
+    and dt >= (select date_add('day', -{{ var('lookback_days', 3) }}, max(dt)) from {{ this }})
+  {% endif %}
+  {% if var('start_date', none) is not none %}
+    -- floor for the first (full-refresh) seed run: bound the bronze scan to dt >= start_date
+    and dt >= date '{{ var('start_date') }}'
   {% endif %}
 ),
 ranked as (

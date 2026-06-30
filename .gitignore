@@ -19,3 +19,4 @@ deploy/task.env
 
 # OS
 .DS_Store
+profiles.yml

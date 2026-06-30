@@ -5,5 +5,6 @@ logs
 .git
 .bkit
 docs
-deploy
+deploy/*
+!deploy/run_dbt.py
 **/__pycache__

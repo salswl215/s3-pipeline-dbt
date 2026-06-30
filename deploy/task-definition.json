@@ -6,7 +6,7 @@
   "memory": "2048",
   "executionRoleArn": "${EXEC_ROLE_ARN}",
   "taskRoleArn": "${TASK_ROLE_ARN}",
-  "runtimePlatform": { "cpuArchitecture": "X86_64", "operatingSystemFamily": "LINUX" },
+  "runtimePlatform": { "cpuArchitecture": "ARM64", "operatingSystemFamily": "LINUX" },
   "containerDefinitions": [
     {
       "name": "s3-pipeline-dbt",
