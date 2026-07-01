@@ -3,19 +3,21 @@
     table_type='iceberg',
     incremental_strategy='merge',
     unique_key=['measurement','cdevice','pdevice','parameter','ts_ns'],
-    partitioned_by=['dt']
+    partitioned_by=['day(ts)']
 ) }}
 
 with src as (
-  select cdevice, pdevice, parameter, value, ts, ts_ns, measurement, dt
-  from {{ source('bronze','metrics') }}
+  select b.cdevice, b.pdevice, b.parameter, b.value, b.ts, b.ts_ns, b.measurement
+  from {{ source('bronze','metrics') }} b
+  {% if is_incremental() %}
+  cross join (select max(ts) as max_ts from {{ this }}) w
+  {% endif %}
   where 1 = 1
   {% if is_incremental() %}
-    and dt >= (select date_add('day', -{{ var('lookback_days', 3) }}, max(dt)) from {{ this }})
+    and b.ts >= w.max_ts - interval '{{ var('lookback_minutes', 60) }}' minute
   {% endif %}
   {% if var('start_date', none) is not none %}
-    -- floor for the first (full-refresh) seed run: bound the bronze scan to dt >= start_date
-    and dt >= date '{{ var('start_date') }}'
+    and b.ts >= timestamp '{{ var('start_date') }} 00:00:00 UTC'
   {% endif %}
 ),
 ranked as (
@@ -26,6 +28,6 @@ ranked as (
     ) as rn
   from src
 )
-select cdevice, pdevice, parameter, value, ts, ts_ns, measurement, dt
+select cdevice, pdevice, parameter, value, ts, ts_ns, measurement
 from ranked
 where rn = 1

@@ -6,7 +6,7 @@ sources:
     schema: bronze
     tables:
       - name: metrics
-        description: "Append-only event metrics, partitioned by event-date dt."
+        description: "Append-only event metrics, Iceberg hidden-partitioned by day(ts)."
         loaded_at_field: ts
         freshness:
           warn_after: {count: 24, period: hour}
@@ -21,10 +21,8 @@ sources:
           - name: value
             description: "field value (double)"
           - name: ts
-            description: "event time, microsecond, UTC (timestamptz)"
+            description: "event time, microsecond, UTC (timestamptz, created via PyIceberg). day(ts) hidden partition derives from this."
           - name: ts_ns
             description: "original ns epoch (lossless, bigint)"
           - name: measurement
             description: "line-protocol measurement"
-          - name: dt
-            description: "event-date partition key (UTC date of ts)"

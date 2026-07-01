@@ -2,13 +2,13 @@ version: 2
 
 models:
   - name: gold_metrics_daily
-    description: "Daily aggregate per device+parameter+measurement. avg/min/max/count of value."
+    description: "Daily aggregate per device+parameter+measurement (event_day = date_trunc('day', ts)). avg/min/max/count of value."
     columns:
       - name: sample_count
         tests:
           - dbt_utils.accepted_range:
               arguments:
-                min_value: 1
+                min_value: 0
                 inclusive: true
     tests:
       - dbt_utils.unique_combination_of_columns:
@@ -18,7 +18,7 @@ models:
               - cdevice
               - pdevice
               - parameter
-              - dt
+              - event_day
 
   - name: gold_metrics_hourly
     description: "Hourly aggregate per device+parameter+measurement (ts_hour = date_trunc('hour', ts)). avg/min/max/count of value."
@@ -27,7 +27,7 @@ models:
         tests:
           - dbt_utils.accepted_range:
               arguments:
-                min_value: 1
+                min_value: 0
                 inclusive: true
     tests:
       - dbt_utils.unique_combination_of_columns:
@@ -38,22 +38,3 @@ models:
               - pdevice
               - parameter
               - ts_hour
-
-  - name: gold_metrics_daily_aa010
-    description: "Example measurement-scoped gold mart: only measurement='AA010', derived from gold_metrics_daily."
-    columns:
-      - name: sample_count
-        tests:
-          - dbt_utils.accepted_range:
-              arguments:
-                min_value: 1
-                inclusive: true
-    tests:
-      - dbt_utils.unique_combination_of_columns:
-          arguments:
-            combination_of_columns:
-              - measurement
-              - cdevice
-              - pdevice
-              - parameter
-              - dt

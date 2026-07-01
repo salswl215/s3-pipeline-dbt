@@ -12,6 +12,12 @@ vars:
 models:
   s3_pipeline_dbt:
     silver:
+      +materialized: incremental
+      +incremental_strategy: merge
+      +table_type: iceberg
       +schema: silver
     gold:
+      +materialized: incremental
+      +incremental_strategy: merge
+      +table_type: iceberg
       +schema: gold
